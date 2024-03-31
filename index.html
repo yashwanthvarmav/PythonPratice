@@ -1,33 +1,29 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width">
-<title>Test API Client</title>
-<script>
-let doIt=()=>{
-  let tab=document.getElementById("tab1");
-  let rows=tab1.getElementsByTagName('tr');
-  fetch('https://dspaul.dbsprojects.ie:8080/')
-    .then(response => response.json())
-    .then(data=>data.Results.forEach(  //.slice(0,3)
-      x=>{
-        let newRow=rows[0].cloneNode(true);
-        let divs=newRow.getElementsByTagName('td');
-        divs[0].innerHTML=x['ID'];
-        divs[1].innerHTML=x['Name'];
-        divs[2].innerHTML=x['Email'];
-        tab1.appendChild(newRow);
-      }
-    )
-  );
-}
-</script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Test API Client</title>
 </head>
 <body>
-<button onClick="doIt()">Press me</button>
-This is where the results turn up: <br/>
-<table id='tab1' bgcolor='blue'>
-<tr><td>ID</td><td>Name</td><td>Email</td></tr>
-</table></body>
+    <button onclick="fetchData()">Fetch Data</button>
+    <div id="data-container"></div>
+
+    <script>
+        function fetchData() {
+            fetch('https://yourdomain.dbsprojects.ie:8080/')
+                .then(response => response.json())
+                .then(data => {
+                    let container = document.getElementById('data-container');
+                    container.innerHTML = '<h2>Data from API:</h2>';
+                    data.Results.forEach(result => {
+                        container.innerHTML += '<p>ID: ' + result.ID + ', Name: ' + result.Name + ', Email: ' + result.Email + '</p>';
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                });
+        }
+    </script>
+</body>
 </html>
